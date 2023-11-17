@@ -14,26 +14,30 @@ namespace PlatformService.Infrastructure.Data
         }
         private static void SeedData(AppDbContext context, bool isProd) 
         {
-            if(isProd)
+            Console.WriteLine($"Connection string:{context.Database.GetConnectionString()}");
+
+            if (isProd)
             {
+                Console.WriteLine("--> Using In SQL Db ...");
            
-                try
-                {
-                    Console.WriteLine("--> Attempting to apply migratons...");
-                    context.Database.Migrate();
-                }
-                catch (System.Exception ex)
-                {
+               try
+               {
+                   Console.WriteLine("--> Attempting to apply migratons...");
+                   context.Database.Migrate();
+               }
+               catch (System.Exception ex)
+               {
                     
                    
-                      Console.WriteLine($"Migration failed: {ex.Message}");
-                    throw;
-                }
+                     Console.WriteLine($"Migration failed: {ex.Message}");
+                   throw;
+               }
                 
 
             }
             else
             {
+                Console.WriteLine("--> Using In Memory Db ...");
                 if (!context.Platform.Any())
                 {
                     Console.WriteLine("--> Seeding data ...");
@@ -52,7 +56,7 @@ namespace PlatformService.Infrastructure.Data
 
                 }
 
-            }
+           }
 
           
         }
