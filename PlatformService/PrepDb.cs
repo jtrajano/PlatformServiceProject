@@ -14,8 +14,7 @@ namespace PlatformService.Infrastructure.Data
         }
         private static void SeedData(AppDbContext context, bool isProd) 
         {
-            Console.WriteLine($"Connection string:{context.Database.GetConnectionString()}");
-
+            
             if (isProd)
             {
                 Console.WriteLine("--> Using In SQL Db ...");

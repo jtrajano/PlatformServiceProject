@@ -58,7 +58,7 @@ namespace PlatformService.AsyncDataServices
                 body: body
                 );
 
-            Console.WriteLine("$--> We have sent { message }");
+            Console.WriteLine($"--> We have sent { message }");
 
 
         }

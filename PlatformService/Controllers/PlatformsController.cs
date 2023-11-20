@@ -60,7 +60,8 @@ namespace PlatformService.Controllers
             await _service.SaveChangesAsync();
 
             var platformReadDto = _mapper.Map<PlatformReadDto>(platform);
-
+            
+            // send sync message
           
             try
             {
@@ -70,6 +71,22 @@ namespace PlatformService.Controllers
             {
                 
                 Console.WriteLine("--> Could not send synchronously:" + ex.Message);
+            }
+
+
+            // send async message
+            try
+            {
+                var platformPublishedDto = _mapper.Map<PlatformPublishedDto>(platformReadDto);
+
+                platformPublishedDto.Event = "Platform_Published";
+                _messageBuClient.PublishNewPlatform(platformPublishedDto);
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"--> Could not send asynchronously: {ex.Message}");
             }
        
             return CreatedAtRoute(nameof(GetPlatformById), 
