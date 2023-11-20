@@ -22,5 +22,8 @@
     <ProjectReference Include="..\PlatformService.Core\PlatformService.Core.csproj" />
     <ProjectReference Include="..\PlatformService.Infrastructure\PlatformService.Infrastructure.csproj" />
   </ItemGroup>
-
+  
+  <ItemGroup>
+    <Protobuf Include = "Protos\platforms.proto" GrpcServices="Server" />
+  </ItemGroup>
 </Project>

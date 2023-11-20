@@ -9,6 +9,7 @@ using PlatformService.SyncDataService.Http;
 using PlatformService.SyncDataService;
 using Microsoft.Extensions.Options;
 using PlatformService.AsyncDataServices;
+using PlatformService.SyncDataService.Grpc;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,7 @@ builder.Services.AddScoped<IPlatformService, PfService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
 builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
+builder.Services.AddGrpc();
 
 
 if(builder.Environment.IsProduction()){
@@ -43,11 +45,21 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+
+
+app.UseEndpoints(
+    endpoints=>{
+        endpoints.MapControllers();
+        endpoints.MapGrpcService<GrpcPlatformService>();
+        endpoints.MapGet("/protos/platforms.proto", async context=>{
+            await context.Response.WriteAsync(File.ReadAllText("Protos/platforms.proto"));
+        });
+    }
+);
 
 app.Run();
 
