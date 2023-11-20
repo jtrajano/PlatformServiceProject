@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PlatformService.AsyncDataServices;
 using PlatformService.Core.Interfaces;
 using PlatformService.Core.Models;
 using PlatformService.Dtos;
@@ -15,9 +16,15 @@ namespace PlatformService.Controllers
         private readonly IPlatformService _service;
         private readonly IMapper _mapper;
         private readonly ICommandDataClient _command;
-        public PlatformsController(IPlatformService service, IMapper mapper, ICommandDataClient command)
+        private readonly IMessageBusClient _messageBuClient;
+
+        public PlatformsController(IPlatformService service, 
+            IMapper mapper, 
+            ICommandDataClient command,
+            IMessageBusClient messageBusClient)
         {
             _command = command;
+            _messageBuClient = messageBusClient;
             _service = service;
             _mapper = mapper;
         }

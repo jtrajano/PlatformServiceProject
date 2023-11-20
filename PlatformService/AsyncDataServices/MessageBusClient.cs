@@ -41,7 +41,7 @@ namespace PlatformService.AsyncDataServices
             var message = JsonSerializer.Serialize(platformPublishedDto);
             if (_connection.IsOpen)
             {
-                Console.WriteLine("--> Rabbit MQ Connection is open, sedding message..");
+                Console.WriteLine("--> Rabbit MQ Connection is open, sending message..");
                 SendMessage(message);
             }
             else
