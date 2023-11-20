@@ -60,13 +60,12 @@ namespace PlatformService.AsyncDataServices
 
             Console.WriteLine($"--> We have sent { message }");
 
-
         }
 
         public void RabbitMQ_ConnectionShutdown(object sender, ShutdownEventArgs e)
         {
             Console.WriteLine("--> Rabbit MQ Connection shuts down.");
-            _connection.Close();
+     
         }
 
         public void Dispose()
