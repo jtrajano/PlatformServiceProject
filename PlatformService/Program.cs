@@ -8,6 +8,7 @@ using PlatformService.Middleware;
 using PlatformService.SyncDataService.Http;
 using PlatformService.SyncDataService;
 using Microsoft.Extensions.Options;
+using PlatformService.AsyncDataServices;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +20,9 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
 builder.Services.AddScoped<IPlatformService, PfService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddHttpClient<ICommandDataClient , HttpCommandDataClient>();
+builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
+builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
+
 
 if(builder.Environment.IsProduction()){
     builder.Services.AddDbContext<AppDbContext>(
