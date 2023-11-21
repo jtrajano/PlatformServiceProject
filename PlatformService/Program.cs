@@ -46,7 +46,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
 
 //app.UseHttpsRedirection();
-
+app.UseRouting();
 app.UseAuthorization();
 
 
